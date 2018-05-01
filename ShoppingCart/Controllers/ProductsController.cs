@@ -10,28 +10,42 @@ namespace ShoppingCart.Controllers
 {
     public class ProductsController : ApiController
     {
-        Product[] products = new Product[]
+        private readonly IStore store;
+
+        public ProductsController(IStore store)
         {
-            new Product { Id = 1, Name = "Apples", Description = "Fruit",Stock =5, Price = 2.5M },
-            new Product { Id = 2, Name = "Bread", Description = "Loaf",Stock =10,  Price = 1.35M },
-            new Product { Id = 3, Name = "Oranges", Description = "Fruit",Stock =10,  Price = 2.99M },
-            new Product { Id = 4, Name = "Milk", Description = "Milk",Stock =3,  Price = 2.07M },
-            new Product { Id = 5, Name = "Chocolate", Description = "Bars",Stock =20,  Price = 11.79M }
-        };
+            this.store = store;
+        }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return products;
+            return store.GetAllProducts();
         }
 
-        public IHttpActionResult GetProduct(int id)
+        [Route("api/products/{id}")]
+        [HttpGet]
+        public IEnumerable<Product> GetProduct(int id)
         {
-            var product = products.FirstOrDefault((p) => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
+            return store.GetProduct(id);
         }
+
+        [HttpPost]
+        public void AddProduct(Product newProduct)
+        {
+            store.AddProduct(newProduct);
+        }
+
+        [HttpPut]
+        public void UpdateProduct(Product uProduct)
+        {
+            store.UpdateProduct(uProduct);
+        }
+        [Route ("api/products/{id}")]
+        [HttpDelete]
+        public IEnumerable<Product> RemoveProduct(int id)
+        {
+            return store.RemoveProduct(id);
+        }
+      
     }
 }

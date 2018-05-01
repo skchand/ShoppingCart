@@ -19,12 +19,13 @@ namespace ShoppingCart
 
             config.Routes.MapHttpRoute(
                 name: "Products",
-                routeTemplate: "api/{controller}/{id}",
+                  routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
 
-          //  var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
-          //  jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            );
+           
+            //  var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
+            //  jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
