@@ -1,4 +1,5 @@
 ﻿using ShoppingCart.Models;
+using ShoppingCart.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,42 +11,42 @@ namespace ShoppingCart.Controllers
 {
     public class ProductsController : ApiController
     {
-        private readonly IStore store;
+        private readonly IProductService productService;
 
-        public ProductsController(IStore store)
+        public ProductsController(IProductService ProductService)
         {
-            this.store = store;
+            this.productService = ProductService;
         }
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return store.GetAllProducts();
+            return productService.GetAllProducts();
         }
 
         [Route("api/products/{id}")]
         [HttpGet]
-        public IEnumerable<Product> GetProduct(int id)
+        public IHttpActionResult GetProduct(int id)
         {
-            return store.GetProduct(id);
+            return Ok(productService.GetProduct(id));
         }
 
         [HttpPost]
         public void AddProduct(Product newProduct)
         {
-            store.AddProduct(newProduct);
+            productService.AddProduct(newProduct);
         }
 
         [HttpPut]
         public void UpdateProduct(Product uProduct)
         {
-            store.UpdateProduct(uProduct);
+            productService.UpdateProduct(uProduct);
         }
+
         [Route ("api/products/{id}")]
         [HttpDelete]
         public IEnumerable<Product> RemoveProduct(int id)
         {
-            return store.RemoveProduct(id);
+            return productService.RemoveProduct(id);
         }
-      
     }
 }

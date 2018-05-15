@@ -1,6 +1,8 @@
 using System;
 
 using Unity;
+using ShoppingCart.Services;
+
 
 namespace ShoppingCart
 {
@@ -45,6 +47,7 @@ namespace ShoppingCart
 
             var store = new Store();
             container.RegisterInstance<IStore>(store);
+            container.RegisterType<IProductService, ProductService>();
         }
     }
 }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using ShoppingCart.Services;
 
 namespace ShoppingCart
 {
-    internal class Store : IStore
+    public class Store : IStore
     {
-        private List<Product> products;
-
+        public List<Product> Products { get; set; }
         public Store()
         {
             var products = new List<Product>
@@ -19,40 +19,8 @@ namespace ShoppingCart
                 new Product { Id = 4, Name = "Milk", Description = "Milk",Stock =3,  Price = 2.07M },
                 new Product { Id = 5, Name = "Chocolate", Description = "Bars",Stock =20,  Price = 11.79M }
             };
-            this.products = products;
+            this.Products = products;
         }
-            
-        public IEnumerable<Product> GetAllProducts()
-        {
-            return this.products;
-        }
-        public IEnumerable<Product> GetProduct(int id)
-        {
-            if (id == -1)
-            { throw new ArgumentNullException("product id <1"); }
-            var product = products.FirstOrDefault((p) => p.Id == id);
-            yield return product;
-        }
-        public void AddProduct(Product newProduct)
-        {
-            if (newProduct == null)
-            { throw new ArgumentNullException("newProduct"); }
-            products.Add(newProduct);
-        }
-        public void UpdateProduct(Product uProduct)
-        {
-            if (uProduct ==null)
-            { throw new ArgumentNullException("uProduct"); }
-            products.Remove(products.First(p => p.Id.Equals(uProduct.Id)));
-            products.Add(uProduct);
-            
-        }
-        public IEnumerable<Product> RemoveProduct(int id)
-        {
-            if (id == -1)
-            { throw new ArgumentNullException("product id <1"); }
-            products.Remove(products.First(p => p.Id.Equals(id)));
-            return products;
-        }
+       
     }
 }
